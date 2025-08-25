@@ -2,7 +2,7 @@ import customtkinter
 
 def calcular_imc():
     
-    peso=float(caixa_peso.get())
+    peso=float(caixa_peso.get().replace(',','.'))
     altura=float(caixa_altura.get().replace(',','.'))
     resultado = peso / (altura * altura)
     
