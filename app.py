@@ -1,29 +1,51 @@
 import customtkinter
 
 def calcular_imc():
-    
-    peso=float(caixa_peso.get().replace(',','.'))
-    altura=float(caixa_altura.get().replace(',','.'))
-    resultado = peso / (altura * altura)
-    
-    caixa_resultado.configure(state='normal')
-    caixa_resultado.insert('end', f'Índice de massa corporal: {resultado:.2f}\n')
-    
-    if resultado < 17:
-        caixa_resultado.insert('end', 'Muito abaixo do peso!\n', 'vermelho')
-    elif resultado >= 17 and resultado < 18.5:
-        caixa_resultado.insert('end', 'Abaixo do peso.\n', 'laranja')
-    elif resultado >= 18.5 and resultado < 24.9:
-        caixa_resultado.insert('end', 'Peso normal.\n', 'verde')
-    elif resultado >= 24.9 and resultado < 29.9:
-        caixa_resultado.insert('end', 'Acima do peso\n', 'laranja')
-    elif resultado >= 29.9 and resultado < 34.9:
-        caixa_resultado.insert('end', 'Obesidade I\n', 'vermelho')
-    elif resultado >= 34.9 and resultado < 39.9:
-        caixa_resultado.insert('end', 'Obesidade II (severa)\n', 'vermelho')
-    elif resultado > 39.9:
-        caixa_resultado.insert('end', 'Obesidade III (morbida)\n', 'vermelho')
-    caixa_resultado.configure(state='disable')
+    try:
+        if not caixa_peso.get().strip():
+            caixa_resultado.configure(state='normal')
+            caixa_resultado.delete('1.0', 'end')
+            caixa_resultado.insert('end', 'Por favor preencha o campo peso.', 'vermelho')
+            caixa_resultado.configure(state='disable')
+            return
+        
+        if not caixa_altura.get().strip():
+            caixa_resultado.configure(state='normal')
+            caixa_resultado.delete('1.0', 'end')
+            caixa_resultado.insert('end', 'Por favor preencha o campo altura.', 'vermelho')
+            caixa_resultado.configure(state='disable')
+            return        
+
+        peso = float(caixa_peso.get().replace(',','.'))
+        altura = float(caixa_altura.get().replace(',','.'))
+
+        resultado = peso / (altura * altura)
+        
+        caixa_resultado.configure(state='normal')
+        caixa_resultado.delete('1.0', 'end')
+        caixa_resultado.insert('end', f'Índice de massa corporal: {resultado:.2f}\n')
+        
+        if resultado < 17:
+            caixa_resultado.insert('end', 'Muito abaixo do peso!\n', 'vermelho')
+        elif resultado >= 17 and resultado < 18.5:
+            caixa_resultado.insert('end', 'Abaixo do peso.\n', 'laranja')
+        elif resultado >= 18.5 and resultado < 24.9:
+            caixa_resultado.insert('end', 'Peso normal.\n', 'verde')
+        elif resultado >= 24.9 and resultado < 29.9:
+            caixa_resultado.insert('end', 'Acima do peso\n', 'laranja')
+        elif resultado >= 29.9 and resultado < 34.9:
+            caixa_resultado.insert('end', 'Obesidade I\n', 'vermelho')
+        elif resultado >= 34.9 and resultado < 39.9:
+            caixa_resultado.insert('end', 'Obesidade II (severa)\n', 'vermelho')
+        elif resultado > 39.9:
+            caixa_resultado.insert('end', 'Obesidade III (morbida)\n', 'vermelho')
+        caixa_resultado.configure(state='disable')
+
+    except ValueError:
+        caixa_resultado.configure(state='normal')
+        caixa_resultado.insert('end', 'Digite um valor válido.')
+        caixa_resultado.configure(state='disable')
+
 
 
 janela = customtkinter.CTk()
